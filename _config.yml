@@ -1,2 +1,12 @@
 baseurl: /
 auto:true
+
+markdown: rdiscount
+pygments: true
+paginate: 8
+permalink: /:title
+
+title: Seamaner.com
+url: http://seamaner.com
+feed: /atom.xml
+author_info: <a href="http://seamaner.com/">Seamaner</a>
