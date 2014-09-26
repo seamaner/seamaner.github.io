@@ -2,7 +2,7 @@ baseurl: /
 auto: true
 
 markdown: rdiscount
-pygments: true
+pygments: false
 paginate: 8
 permalink: /:title
 
