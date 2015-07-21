@@ -12,6 +12,7 @@ title: 单链表逆转
     int a;
     struct list_ *next;
 }list;
+
 list *reverse_list(list *head)
 {
 	list *r = NULL,*p = head,*q;
