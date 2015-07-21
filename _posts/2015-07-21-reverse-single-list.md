@@ -27,7 +27,7 @@ list *reverse_list(list *head)
 }
 ```
 ##测试代码
-`
+```
 int main(void)
 {
 	int i = 10;
@@ -55,4 +55,4 @@ int main(void)
 	}
 	return 0;
 }
-`
+```
