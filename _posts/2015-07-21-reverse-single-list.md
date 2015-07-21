@@ -26,7 +26,6 @@ list *reverse_list(list *head)
 	return r;
 }
 `
-
 ##测试代码
 `
 int main(void)
