@@ -8,7 +8,8 @@ title: 单链表逆转
 问起的时候想的磕磕绊绊，静下心来2分钟码定。汗。
 每次调整对一个，并记住当前这一个，这样处理下一个时可以进入相同的状态，区别仅在于第一个时，前一个“记录”是NULL
 ##代码
-`typedef struct list_ {
+`
+typedef struct list_ {
     int a;
     struct list_ *next;
 }list;
@@ -23,15 +24,16 @@ list *reverse_list(list *head)
 		p =q; // to the next
 	}
 	return r;
-}`
+}
+`
 
 ##测试代码
 `
 int main(void)
 {
-    int i = 10;
+	int i = 10;
 	list *q = NULL,*p;
-    while(--i) {
+	while(--i) {
 		p = (list*)malloc(sizeof(list));
 		p->a = i;
 		p->next = q;
