@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-      <meta htp-equiv="content-type" content="text/html; charset=utf-8">
-      <title>{{ page.title }}</title>
+      {% include head.html %}
 </head>
 <body>
-     {{ content }}
+      {% include header.html %}
+      <div class="container">
+            <p class="intro">
+                  {{ site.intro }}
+            </p>
+      {{ content }}
+            
+      {% include footer.html %}
+      </div>
 </body>
 </html>
