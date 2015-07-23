@@ -2,7 +2,7 @@
 layout: blog
 title: 求数组中满足给定和的数对
 ---
-<h2>{{ page.title }}</h2>
+
 两个有序数组a、b，输出两个数组中满足给定和sum的数对，即，sum = a[i] + a[j]
 
 ##分析
