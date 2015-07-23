@@ -6,9 +6,6 @@
 </head>
 <body>
      {{ content }}
-<div class="comments">
-  <div class="ds-thread" data-title="{{ page.title }}" data-thread-key="{{ page.id }}" data-url="{{ site.blog.url }}{{ page.url }}"></div>
-  <script type="text/javascript">var duoshuoQuery = {short_name:"{{ site.duoshuo }}"};(function(){var ds = document.createElement('script');ds.type = 'text/javascript';ds.async = true;ds.src = '/res/embed.js';ds.charset = 'UTF-8';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);})();</script>
-</div>
+     {include duoshou.html}
 </body>
 </html>
