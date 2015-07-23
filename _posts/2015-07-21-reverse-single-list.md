@@ -1,5 +1,5 @@
 ---
-layouts: blog
+layout: blog
 title: 单链表逆转
 ---
 <h2>{{ page.title }}</h2>
