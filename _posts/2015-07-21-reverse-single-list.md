@@ -1,6 +1,7 @@
 ---
 layout: blog
 title: 单链表逆转
+desc: 有一单链表将其逆转
 ---
 <h2>{{ page.title }}</h2>
 有一单链表将其逆转
