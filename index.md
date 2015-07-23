@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: frontpage
 title: seamaner
 ---
 <h2>{{ page.title }}</h2>
