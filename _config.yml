@@ -5,7 +5,7 @@ markdown: rdiscount
 pygments: false
 paginate: 8
 permalink: /:title
-excerpt_separator: "```"
+excerpt_separator: "<!--more-->"
 
 title: Seamaner.com
 url: http://seamaner.com
