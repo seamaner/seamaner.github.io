@@ -6,7 +6,10 @@ title: 求数组中满足给定和的数对
 两个有序数组a、b，输出两个数组中满足给定和sum的数对，即，sum = a[i] + a[j]。输入sum，输出所有的a[i]、a[j].
 
 ##分析
-从中间数开始往“两边”找
+从中间数开始往“两边”找：以a的最小数与b的最大数之和为起点，两个数组分别向两端遍历即可。
+
+
+
 ##代码
 ```
 void print_given_sum(int a[], int len_a, int b[], int len_b,int gsum)
