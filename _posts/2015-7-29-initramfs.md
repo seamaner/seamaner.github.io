@@ -16,4 +16,31 @@ They are simple gzip-compresed cpio archives
 
 
 ##Find the initrmafs and gunzip
+'''
+~$ mkdir initfs
+~$ cd initfs/
+~/initfs$ cp /boot/initrd.img-3.13.0-24-generic .
+
+~/initfs$ file initrd.img-3.13.0-24-generic 
+initrd.img-3.13.0-24-generic: gzip compressed data, from Unix, last modified: Fri Jul 18 22:56:46 2014
+~/initfs$ mv initrd.img-3.13.0-24-generic initrd.img.gz
+~/initfs$ gzip -d initrd.img.gz 
+'''
+需要将initrd.img-3.13.0-24-generic添加.gz后缀名，才能解压，gzip检查后缀名，这在linux里倒是比较少见的。
+
+## cpio
+$ file initrd.img 
+initrd.img: ASCII cpio archive (SVR4 with no CRC)
+$ cpio -i < initrd.img 
+82506 blocks
+$ ls
+bin  conf  etc  init  initrd.img  lib  run  sbin  scripts
+###bin
+bin:
+.   busybox  date  dmesg   halt    ipconfig  kmod      losetup  nfsmount  pivot_root  reboot  run-init  sh     udevadm
+..  cpio     dd    fstype  insmod  kbd_mode  loadkeys  mount    ntfs-3g   poweroff    resume  setfont   sleep
+init ---- init脚本
+sbin:
+blkid  dmsetup  dumpe2fs  hwclock  modprobe  mount.fuse  mount.ntfs  mount.ntfs-3g  rmmod  udevadm  wait-for-root
+
 
