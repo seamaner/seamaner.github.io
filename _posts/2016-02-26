@@ -9,9 +9,10 @@ title: 云市场 - Google/Aliyun/AWS market
 
 
 ##IAAS or SAAS
-Google: App for work，效率高的多。
+Google: App for work，效率高的多。Google Apps 是一款专为您企业设计的基于云的增效套件，可帮助您随时随地在任何设备上完成工作。
 Aliyun: 主机租赁业务，只不过是云主机。不需要运维管理方便一些。
-环境同样是x86_64，代码hello.S：
+
+面对不同需求，云主机租赁还是会继续发展，更高效率的SAAS相信Aliyun也会很快完善起来。
 
 ```
 .section .data
