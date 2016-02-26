@@ -3,11 +3,14 @@ layout: blog
 title: 云市场 - Google/Aliyun/AWS market
 ---
 [AWS marketplace](https://aws.amazon.com/marketplace/)
+[Google b2b app marketplace](https://apps.google.com/marketplace/u/0/?pann=gam)
 
 
 
 
-##GAS hello world
+##IAAS or SAAS
+Google: App for work，效率高的多。
+Aliyun: 主机租赁业务，只不过是云主机。不需要运维管理方便一些。
 环境同样是x86_64，代码hello.S：
 
 ```
