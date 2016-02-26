@@ -1,0 +1,37 @@
+---
+layout: blog
+title: 云市场 - Google/Aliyun/AWS market
+---
+[AWS marketplace](https://aws.amazon.com/marketplace/)
+
+
+
+
+##GAS hello world
+环境同样是x86_64，代码hello.S：
+
+```
+.section .data
+    msg:
+       .ascii  "hello, world!"
+ 
+.section .text
+    .global _start
+_start:
+    mov     $1, %rax
+    mov     $1, %rdi
+    mov     $msg, %rsi
+    mov     $13, %rdx
+    syscall
+    mov    $60, %rax
+    mov    $0, %rdi
+    syscall
+
+```
+
+##编译成可执行文件
+
+```
+as -o print.o hello.S
+ld -o print print.o
+```
