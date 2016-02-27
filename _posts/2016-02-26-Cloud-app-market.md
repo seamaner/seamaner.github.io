@@ -4,7 +4,7 @@ title: 云市场 - Google/Aliyun/AWS market
 ---
 [AWS marketplace](https://aws.amazon.com/marketplace/)
 
-[Google b2b app marketplace](https://apps.google.com/marketplace/u/0/?pann=gam)
+[Google B2B app marketplace](https://apps.google.com/marketplace/u/0/?pann=gam)
 
 
 
