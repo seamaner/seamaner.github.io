@@ -1,15 +1,1 @@
-baseurl: /
-auto: true
-
-markdown: rdiscount
-pygments: false
-paginate: 8
-permalink: /:title
-excerpt_separator: "\n\n\n"
-
-title: Seamaner's blog
-url: https://seamaner.github.io
-feed: /atom.xml
-author_info: <a href="https://seamaner.github.io/">Seamaner</a>
-
 theme: jekyll-theme-hacker
