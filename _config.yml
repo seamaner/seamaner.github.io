@@ -12,3 +12,5 @@ url: https://seamaner.github.io
 duoshuo: seamaner
 feed: /atom.xml
 author_info: <a href="https://seamaner.github.io/">Seamaner</a>
+
+theme: jekyll-theme-hacker
