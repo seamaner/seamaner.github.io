@@ -7,8 +7,8 @@ paginate: 8
 permalink: /:title
 excerpt_separator: "\n\n\n"
 
-title: Seamaner.com
-url: http://seamaner.com
+title: Seamaner's blog
+url: https://seamaner.github.io
 duoshuo: seamaner
 feed: /atom.xml
-author_info: <a href="http://seamaner.com/">Seamaner</a>
+author_info: <a href="https://seamaner.github.io/">Seamaner</a>
