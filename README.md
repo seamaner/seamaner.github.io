@@ -1,5 +1,5 @@
 # seamaner.github.io
-seamaner's blog [About][1]
+seamaner's blog [(About)][1]
 
 
 
