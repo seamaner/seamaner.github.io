@@ -10,7 +10,7 @@ desc: 有一单链表将其逆转
 
 
 
-##代码
+## 代码
 ```
 typedef struct list_ {
     int a;
@@ -29,7 +29,7 @@ list *reverse_list(list *head)
 	return r;
 }
 ```
-##测试代码
+## 测试代码
 ```
 int main(void)
 {
@@ -59,5 +59,5 @@ int main(void)
 	return 0;
 }
 ```
-###output
+### output
 1 2 3 4 5 6 7 8 9 9 8 7 6 5 4 3 2 1 
