@@ -36,11 +36,13 @@ $ cpio -i < initrd.img
 82506 blocks
 $ ls
 bin  conf  etc  init  initrd.img  lib  run  sbin  scripts
+```
 ### bin
 bin:
 .   busybox  date  dmesg   halt    ipconfig  kmod      losetup  nfsmount  pivot_root  reboot  run-init  sh     udevadm
 ..  cpio     dd    fstype  insmod  kbd_mode  loadkeys  mount    ntfs-3g   poweroff    resume  setfont   sleep
-init ---- init脚本
-sbin:
+### init ---- init脚本
+### sbin:
+```
 blkid  dmsetup  dumpe2fs  hwclock  modprobe  mount.fuse  mount.ntfs  mount.ntfs-3g  rmmod  udevadm  wait-for-root
 ```
