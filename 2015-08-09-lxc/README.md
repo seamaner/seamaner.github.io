@@ -1,17 +1,18 @@
+# Linux Container 学习
 ---
 layout: blog
 title: Linux Container 学习
 ---
 Linux Container学习：LXC安装试用，对容器虚拟化有一个感性认识。
-##安装LXC
+## 安装LXC
 ### 安装环境
 windows 7使用 VirtualBox 启动 Ubuntu。Ubuntu安装LXC。
 ###安装LXC
 ```
 sudo apt-get install lxc
 ```
-##创建容器
-###创建container
+## 创建容器
+### 创建container
 ```
 sudo lxc-create -n container1
 lxc-create: symbol lookup error: /usr/lib/i386-linux-gnu/liblxc.so.1: undefined symbol: cgmanager_get_pid_cgroup_abs_sync
@@ -24,14 +25,14 @@ sudo apt-get upgrade
 
 
 
-###创建sshd container
+### 创建sshd container
 以模板 sshd 创建名为 sshd 的容器
 
 ```
 sudo lxc-start -n sshd -t sshd
 ```
 
-###container shell
+### container shell
 ```
 sudo lxc-attach -n sshd
 bash-4.3# pwd
@@ -39,7 +40,7 @@ bash-4.3# pwd
 bash-4.3# ls
 bin  dev  dhclient.conf  etc  home  lib  lib64	proc  root  run  run-dhcp  sbin  sys  tmp  usr	var
 ```
-##inside容器
+## inside容器
 ```
 bash-4.3# netstat -an
 Active Internet connections (servers and established)
