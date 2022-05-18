@@ -12,5 +12,5 @@ seamaner's blog [(About)][1]
 
 
 [1]: ./about.html
-[2]: ./2014_09_25_5_balls/README
+[2]: ./2014_09_25_5_balls
 [3]: ./2015-07-21-reverse-single-list
