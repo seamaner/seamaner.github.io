@@ -1,8 +1,6 @@
 # Linux Container 学习
----
-layout: blog
-title: Linux Container 学习
----
+
+
 Linux Container学习：LXC安装试用，对容器虚拟化有一个感性认识。
 ## 安装LXC
 ### 安装环境
