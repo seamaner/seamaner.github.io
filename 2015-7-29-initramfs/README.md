@@ -1,7 +1,5 @@
----
-layout: blog
-title: 简单分析initramfs
----
+# 简单分析initramfs
+
 
 initramfs 是linux 启动必须的吗？如果kernel有mount root fs所需的所有驱动，initramfs就不是必须的。读取磁盘数据，
 kernel需要驱动的帮助，然而物理磁盘各式各样，驱动各不相同，kernel不太可能都包括进来。initramfs是包含少量驱动模块和工具集的archive。
@@ -17,7 +15,7 @@ They are simple gzip-compresed cpio archives
 
 
 
-##Find the initrmafs and gunzip
+## Find the initrmafs and gunzip
 ```
 ~$ mkdir initfs
 ~$ cd initfs/
@@ -38,7 +36,7 @@ $ cpio -i < initrd.img
 82506 blocks
 $ ls
 bin  conf  etc  init  initrd.img  lib  run  sbin  scripts
-###bin
+### bin
 bin:
 .   busybox  date  dmesg   halt    ipconfig  kmod      losetup  nfsmount  pivot_root  reboot  run-init  sh     udevadm
 ..  cpio     dd    fstype  insmod  kbd_mode  loadkeys  mount    ntfs-3g   poweroff    resume  setfont   sleep
