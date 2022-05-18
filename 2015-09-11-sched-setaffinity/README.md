@@ -1,3 +1,4 @@
+# CPU affinity
 ---
 layout: blog
 title: 点点滴滴-sched_setaffinity
