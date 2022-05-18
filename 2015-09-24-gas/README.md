@@ -1,3 +1,4 @@
+# 汇编学习 - GAS hello world
 ---
 layout: blog
 title: 汇编学习 - GAS hello world
@@ -8,7 +9,7 @@ GAS版本。
 
 
 
-##GAS hello world
+## GAS hello world
 环境同样是x86_64，代码hello.S：
 
 ```
@@ -30,7 +31,7 @@ _start:
 
 ```
 
-##编译成可执行文件
+## 编译成可执行文件
 
 ```
 as -o print.o hello.S
