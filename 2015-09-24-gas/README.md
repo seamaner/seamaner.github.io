@@ -1,8 +1,6 @@
 # 汇编学习 - GAS hello world
----
-layout: blog
-title: 汇编学习 - GAS hello world
----
+
+
 最近在学习汇编的一些资料，0xax的一些文章非常不错，文章中的代码是NASM的。本地没有nasm工具，而as却是现成的，同是注意到/linux-3.17.2/arch/x86/boot/head.S也是GAS的，
 所以决定将原blog的代码，“翻译”成GAS写出来。本文是![Say hello to x86_64 Assembly [part 1]](http://0xax.github.io/blog/2014/08/01/say-hello-to-x86_64-assembly-part-1/)中hello world的
 GAS版本。
