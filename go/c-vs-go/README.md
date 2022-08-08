@@ -1,6 +1,13 @@
-一般来说Golang性能要比C"差一些"，到底差在哪，差多少呢，有没有比C性能好的场景。通过具体的Code例子来说明，实际的结果与原来的想法可能有很大不同。
+这篇是"理解Golang"系列的第一篇，主要涉及Go在性能方面的一些特点。接下来的几篇涉及scheduler、routine、chan的具体实现。
 
-程序完成的任务主要要两类：CPU消耗性，CPU-bound；IO消耗型，IO-bound。
+CPU速度远快于内存，这就像两个转动的齿轮，一个比另一个转动的要快，等待读取内存时，CPU将浪费掉不少指令。CPU的L1/L2/L3 Cache就是通过缓存来缩短平均读取时间。
+
+内核线程切换约消耗可以执行10K条指令的时间，另一面，L1/L2 cache都是每个core独有的。如果一个thread切换到不同的core执行，一方面切换本身有消耗，另一方面再次运行时落在不同的core上，cache都将失效，这对性能影响是非常大的。
+
+线程执行的任务分两类：
+CPU消耗性，CPU-bound；IO消耗型，IO-bound。
+
+
 ##CPU-bound
 ball.c 代码：
 ```C
@@ -77,7 +84,7 @@ func main() {
 	start:=time.Now()
 
 	go func() {
-		for {
+	for {
 			select {
 			case chan1to2 <- ball:
 				//fmt.Printf("goroutine1-1 ball %d\n", ball)
