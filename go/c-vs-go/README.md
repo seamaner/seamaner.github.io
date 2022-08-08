@@ -340,4 +340,5 @@ Returning thread1
 参考资料：  
 - https://stackoverflow.com/questions/868568/what-do-the-terms-cpu-bound-and-i-o-bound-mean
 - https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html
+- https://www.atatus.com/ask/cpu-io-memory-bound
 
