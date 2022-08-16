@@ -8,6 +8,7 @@ seamaner's blog [(About)][1]
 |	Name                                   | Type         | Desc       |  
 | ---------------------------------------- | ------------ | ---------- |  
 | [2022-08-06-c-vs-go][11]                 | Go           | Go性能与调度|  
+| [2022-08-06-signal-sender][12]           | Linux        | signal sender|  
 
 <!--
 ;| [2014-09-25-5-balls][2]                           | 算法         |            |
@@ -31,3 +32,4 @@ seamaner's blog [(About)][1]
 [9]: ./2015-7-19-given-sum
 [10]: ./2015-7-29-initramfs
 [11]: ./go/c-vs-go
+[11]: ./linux/signal-sender
