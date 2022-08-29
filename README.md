@@ -32,4 +32,4 @@ seamaner's blog [(About)][1]
 [9]: ./2015-7-19-given-sum
 [10]: ./2015-7-29-initramfs
 [11]: ./go/c-vs-go
-[11]: ./linux/signal-sender
+[12]: ./linux/signal-sender
