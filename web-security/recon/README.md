@@ -27,24 +27,24 @@
   * search from mxtoolbox.com
 
 * DNS zone transfer 
-  * dig axfr z.hackycorp.com @ns1.hackycorp.com
+  * `dig axfr z.hackycorp.com @ns1.hackycorp.com`
 
 * DNS version 
-  * dig chaos txt version.bind @z.hackycorp.com
+  * `dig chaos txt version.bind @z.hackycorp.com`
 
 * github  
   * code 
   * commit info
   * developer of org 
   * raw information from commit.patch
-    * https://github.com/hackycorp/repo7/commit/666d86b5e792bec019d60499afc1d35b490b9985.patch
+    * `https://github.com/hackycorp/repo7/commit/666d86b5e792bec019d60499afc1d35b490b9985.patch`
   * branches
     * `git log --diff-filter=D --summary`
 
 * assets.xxx.com/key.txt
 
 * aws s3 
-    * bucket name:
+    * public bucket file
       * `aws s3 cp s3://assets.hackycorp.com/key2.txt ./  (on Cloudshell)`
 
 * hardcoded key in js
