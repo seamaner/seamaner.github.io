@@ -26,10 +26,10 @@
 - DNS zone transfer 
     dig axfr z.hackycorp.com @ns1.hackycorp.com
 
-- DNS version
+- DNS version 
     dig chaos txt version.bind @z.hackycorp.com
 
-- github
+- github  
     code 
     commit info
     developer of org 
@@ -40,8 +40,9 @@
 
 - assets.xxx.com/key.txt
 
-- aws s3
+- aws s3 
     bucket name:
     aws s3 cp s3://assets.hackycorp.com/key2.txt ./  (on Cloudshell)
 
 - hardcoded key in js
+
