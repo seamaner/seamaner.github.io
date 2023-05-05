@@ -134,12 +134,12 @@ collections:
 #      Comments    #
 # ---------------- #
 # support provider: disqus, gitment, gitalk, utterances, beaudar, giscus
-comments_provider: disqus
+comments_provider: gitalk
 # !!!重要!!! 请修改下面这些信息为你自己申请的
 # !!!Important!!! Please modify infos below to yours
 # disqus 配置参考：https://disqus.com
-disqus:
-    username: seamaner
+#disqus:
+#    username: seamaner
 # gitment 配置参考：https://imsun.net/posts/gitment-introduction/
 #gitment:
 #    owner: mzlogin
@@ -148,11 +148,11 @@ disqus:
 #        client_id: d2e1cbbd298958076462
 #        client_secret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
 # gitalk 配置参考：https://github.com/gitalk/gitalk#install
-#gitalk:
-#    owner: mzlogin
-#    repo: blog-comments
-#    clientID: d2e1cbbd298958076462
-#    clientSecret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
+gitalk:
+    owner: seamaner
+    repo: seamaner.github.io
+    clientID: effeacc3260261611de1
+    clientSecret: 69b00f524e07565855ff0d2f24de3c63810bfe34
 # utterances 配置参考：https://utteranc.es/
 #utterances:
 #    repo: mzlogin/blog-comments
