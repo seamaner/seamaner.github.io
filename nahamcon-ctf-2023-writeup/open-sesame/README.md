@@ -1,5 +1,6 @@
-#
+# Open Sesame
 
+`Something about forty thieves or something? I don't know, they must have had some secret incantation to get the gold!`
 ## Writeup
 ```
 00000000000011eb <caveOfGold>:
