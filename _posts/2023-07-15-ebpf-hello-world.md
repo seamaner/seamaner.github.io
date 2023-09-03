@@ -10,6 +10,7 @@ keywords: eBPF
 本文用最原始最直接的方式展示eBPF是如何工作的---用eBPF字节码写一个“hello world”。
 
 ## 什么是eBPF
+
 "register-based virtual machine" 基于寄存器的虚拟机。不同于KVM等system virtual machine技术，和Java 虚拟机、Lua虚拟机类似，是一种process virtual machine。
 进程虚拟机最常用的设计模式有两种：
 - register-base virtual machine
@@ -21,15 +22,16 @@ keywords: eBPF
  2 LOAD reg1 #200
  3 ADD reg2 reg1 reg0
 ```
-第1、2行把100、200分别存入寄存器reg0和reg1；
-第3行把两个数相加，把结果存到寄存器reg2上。
-如果用基于stack的方式计算，数据先放在stack上的，计算时先执行两次POP，计算结果再存回到栈上。
+第1、2行把100、200分别存入寄存器reg0和reg1； 
+第3行把两个数相加，把结果存到寄存器reg2上。 
+如果用基于stack的方式计算，数据先放在stack上的，计算时先执行两次POP，计算结果再存回到栈上。 
 ```
 r = STACK[sp--];
 l = STACK[sp--];
 STACK[++sp] = (r + l);
-```
+``` 
 eBPF也可以说是跑在内核空间内，只能运行内核允许运行的任务的语言，是一种“特定领域语言”。如果不考虑JIT，只是模拟运行，几乎可以随意设计“特定领域语言”，一个简单的register-based vm：
+
 ```
 #include "stdio.h"
  
@@ -206,8 +208,11 @@ int main()
 那么eBPF是如何设计的？看一下eBPF字节码。
 
 ## eBPF字节码
-`opcode:8 src_reg:4 dst_reg:4 offset:16 imm:32 // In little-endian BPF.`
+
+`opcode:8 src_reg:4 dst_reg:4 offset:16 imm:32 // In little-endian BPF.` 
+
 ## hello world
+
 C hello world
 就是把“hello world”输出出来。
 BPF系统调用
@@ -239,11 +244,9 @@ struct bpf_insn bpf_prog[] = {
     {0x95, 0, 0, 0, 0x0 }, //exit;
 };
 ```
+
 如何运行？
 编译 -》 加载到内核
 一般需要关联到内核事件，内核整个是由事件驱动的。查看man 发现run test CMD
 
 运行结果查看
-
-
-
