@@ -13,10 +13,11 @@ keywords: eBPF
 
 "register-based virtual machine" 基于寄存器的虚拟机。不同于KVM等system virtual machine技术，和Java 虚拟机、Lua虚拟机类似，是一种process virtual machine。
 进程虚拟机最常用的设计模式有两种：
-- register-base virtual machine
+- register-base virtual machine 
 - stack-based virtual machine
-两种设计模式没有本质的区别，只是计算方式不同。
-计算两个整数相加，用register-based virtual machine，字节码是：
+  
+两种设计模式没有本质的区别，只是计算方式不同。 
+计算两个整数相加，用register-based virtual machine，字节码是： 
 ```
  1 LOAD reg0 #100
  2 LOAD reg1 #200
