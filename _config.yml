@@ -1,7 +1,6 @@
 # ---------------- #
 #   Main Configs   #
 # ---------------- #
-theme: minima
 baseurl:
 url: https://seamaner.github.io
 date_format: "ordinal"
