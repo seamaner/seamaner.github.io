@@ -1,4 +1,4 @@
-t# seamaner's blog [(About)][1]
+# seamaner's blog [(About)][1]
 
 
 
