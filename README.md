@@ -1,6 +1,6 @@
 # seamaner's blog [(About)][1]
 
-have a test
+have a test2
 
 ## Blogs
 
