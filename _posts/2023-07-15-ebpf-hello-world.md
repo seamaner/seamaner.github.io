@@ -31,7 +31,9 @@ r = STACK[sp--];
 l = STACK[sp--];
 STACK[++sp] = (r + l);
 ``` 
-eBPF也可以说是跑在内核空间内，只能运行内核允许运行的任务的语言，是一种“特定领域语言”。如果不考虑JIT，只是模拟运行，几乎可以随意设计“特定领域语言”，一个简单的register-based vm：
+eBPF也可以说是跑在内核空间内，只能运行内核允许运行的任务的语言，是一种“特定领域语言”。如果不考虑JIT，只是模拟运行，几乎可以随意设计“特定领域语言”。  
+“寄存器”并不是CPU的寄存器，确实只是模拟的寄存器，在eBPF里（eBPF的解释器，也就是内核代码里的C函数）“寄存器”就是uint64的整数数组或全局变量。  
+一个简单的register-based VM：  
 
 ```
 #include "stdio.h"
@@ -205,25 +207,52 @@ int main()
   return 0;
 }
 ```
-
+在这个VM里“寄存器”就是`int`数组`int regs[NUM_REGS];`。    
+    
 那么eBPF是如何设计的？看一下eBPF字节码。
 
 ## eBPF字节码
-
-`opcode:8 src_reg:4 dst_reg:4 offset:16 imm:32 // In little-endian BPF.` 
+每个字节码实际上是8个字节，操作码占8位，源目的寄存器各占4位，offset 16位，立即数32位：    
+`opcode:8 src_reg:4 dst_reg:4 offset:16 imm:32 // In little-endian BPF.`     
 
 ## hello world
 
-C hello world
+### C hello world 
+
 就是把“hello world”输出出来。
-BPF系统调用
-/* 补充 man bpf内容*/
-打印函数
-如何把字符串传给给内核呢？
-字符串共13个字节。可以分拆成几段，这样可以存在寄存器上，接着可以保存到stack上。
+### eBPF Hello world
+eBPF是在内核内运行的，为了输出“Hello world”，需要3步：  
+- 准备eBPF字节码
+- 使用BPF系统调用加载eBPF字节码到内核
+- 在内核的运行
+
+BPF系统调用  
+``` 
+int bpf(int cmd, union bpf_attr *attr, unsigned int size);
+
+struct {    /* Used by BPF_PROG_LOAD */
+                   __u32         prog_type;
+                   __u32         insn_cnt;
+                   __aligned_u64 insns;      /* 'const struct bpf_insn *' */
+                   __aligned_u64 license;    /* 'const char *' */
+                   __u32         log_level;  /* verbosity level of verifier */
+                   __u32         log_size;   /* size of user buffer */
+                   __aligned_u64 log_buf;    /* user supplied 'char *'
+                                                buffer */
+                   __u32         kern_version;
+                                             /* checked when prog_type=kprobe
+                                                (since Linux 4.1) */
+};
+```
+
+#### 如何打印打印函数
+bpf_trace_printk  
+#### 如何把字符串传给给内核呢？
+
+字符串共13个字节。可以分拆成几段，每4字节段（imm是32bit），这样可以存在寄存器上，接着可以保存到stack上。  
 最后，调用print函数完成输出。
 
-代码最终的结果：
+代码最终的结果：  
 
 ```
 struct bpf_insn bpf_prog[] = {
@@ -247,6 +276,10 @@ struct bpf_insn bpf_prog[] = {
 ```
 
 如何运行？  
+查看kernel doc发现可以用BPF_PROG_RUN   
+```
+The BPF_PROG_RUN command can be used through the bpf() syscall to execute a BPF program in the kernel and return the results to userspace. This can be used to unit test BPF programs against user-supplied context objects, and as way to explicitly execute programs in the kernel for their side effects. The command was previously named BPF_PROG_TEST_RUN, and both constants continue to be defined in the UAPI header, aliased to the same value.
+```
 编译 -》 加载到内核  
 一般需要关联到内核事件，内核整个是由事件驱动的。查看man 发现run test CMD  
 
