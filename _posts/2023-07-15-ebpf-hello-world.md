@@ -212,7 +212,8 @@ int main()
 那么eBPF是如何设计的？看一下eBPF字节码。
 
 ## eBPF字节码
-每个字节码实际上是8个字节，操作码占8位，源目的寄存器各占4位，offset 16位，立即数32位：    
+
+每个字节码实际上是8个字节，操作码占8位，源目的寄存器各占4位，offset 16位，立即数32位：      
 `opcode:8 src_reg:4 dst_reg:4 offset:16 imm:32 // In little-endian BPF.`     
 
 ## hello world
@@ -220,7 +221,9 @@ int main()
 ### C hello world 
 
 就是把“hello world”输出出来。
+
 ### eBPF Hello world
+
 eBPF是在内核内运行的，为了输出“Hello world”，需要3步：  
 - 准备eBPF字节码
 - 使用BPF系统调用加载eBPF字节码到内核
@@ -246,11 +249,13 @@ struct {    /* Used by BPF_PROG_LOAD */
 ```
 
 #### 如何打印打印函数
+
 bpf_trace_printk  
+
 #### 如何把字符串传给给内核呢？
 
 字符串共13个字节。可以分拆成几段，每4字节段（imm是32bit），这样可以存在寄存器上，接着可以保存到stack上。  
-最后，调用print函数完成输出。
+最后，调用print函数完成输出。  
 
 代码最终的结果：  
 
@@ -275,12 +280,17 @@ struct bpf_insn bpf_prog[] = {
 };
 ```
 
-如何运行？  
-查看kernel doc发现可以用BPF_PROG_RUN   
+#### 如何运行
+
+查看kernel doc发现可以用BPF_PROG_RUN  
+
 ```
 The BPF_PROG_RUN command can be used through the bpf() syscall to execute a BPF program in the kernel and return the results to userspace. This can be used to unit test BPF programs against user-supplied context objects, and as way to explicitly execute programs in the kernel for their side effects. The command was previously named BPF_PROG_TEST_RUN, and both constants continue to be defined in the UAPI header, aliased to the same value.
 ```
-编译 -》 加载到内核  
+
+#### 编译 -》 加载到内核 
+
 一般需要关联到内核事件，内核整个是由事件驱动的。查看man 发现run test CMD  
 
-运行结果查看  
+#### 运行结果查看  
+
