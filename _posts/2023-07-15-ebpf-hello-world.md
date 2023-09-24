@@ -155,5 +155,5 @@ int main(void){
 
 #### 运行结果查看  
 
-bpftool prog tracelog
-[](./eBPF-hello-world-tracelog.png)
+bpftool prog tracelog    
+![tracelog](./eBPF-hello-world-tracelog.png)
