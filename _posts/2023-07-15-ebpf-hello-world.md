@@ -33,183 +33,10 @@ STACK[++sp] = (r + l);
 ``` 
 eBPF也可以说是跑在内核空间内，只能运行内核允许运行的任务的语言，是一种“特定领域语言”。如果不考虑JIT，只是模拟运行，几乎可以随意设计“特定领域语言”。  
 “寄存器”并不是CPU的寄存器，确实只是模拟的寄存器，在eBPF里（eBPF的解释器，也就是内核代码里的C函数）“寄存器”就是uint64的整数数组或全局变量。  
-一个简单的register-based VM：  
-
-```
-#include "stdio.h"
- 
-#define NUM_REGS 4
-#define TRUE    1
-#define FALSE   0
-#define INVALID -1
-  
-enum opCodes {
-    HALT  = 0x0,
-    LOAD  = 0x1,
-    ADD   = 0x2,
-};
- 
-/*
- * Register set of the VM
- */
-int regs[NUM_REGS];
- 
-/*
- * VM specific data for an instruction
- */
-struct VMData_ {
-  int reg0;
-  int reg1;
-  int reg2;
-  int reg3;
-  int op;
-  int scal;
-};
-typedef struct VMData_ VMData;
- 
-int  fetch();
-void decode(int instruction, VMData *data);
-void execute(VMData *data);
-void run();
- 
-/*
- * Addressing Modes:
- * - Registers used as r0, r1,..rn.
- * - Scalar/ Constant (immediate) values represented as #123
- * - Memory addresses begin with @4556
- */
- 
-/*
- * Instruction set:
- * - Load an immediate number (a constant) into a register
- * - Perform an arithmetic sum of two registers (in effect,
- *   adding two numbers)
- * - Halt the machine
- *
- * LOAD reg0 #100
- * LOAD reg1 #200
- * ADD reg2 reg1 reg0  // 'reg2' is destination register
- * HALT
- */
- 
-/*
- * Instruction codes:
- * Since we have very small number of instructions, we can have
- * instructions that have following structure:
- * - 16-bit instructions
- *
- * Operands get 8-bits, so range of number supported by our VM
- * will be 0-255.
- * The operands gets place from LSB bit position
- * |7|6|5|4|3|2|1|0|
- *
- * Register number can we encoded in 4-bits 
- * |11|10|9|8|
- *
- * Rest 4-bits will be used by opcode encoding.
- * |15|14|13|12|
- *
- * So an "LOAD reg0 #20" instruction would assume following encoding:
- * <0001> <0000> <00010100>
- * or 0x1014 is the hex representation of given instruction.
- */
- 
- 
- /*
-  * Sample program with an instruction set
-  */
- 
-unsigned int code[] = {0x1014,
-                       0x110A,
-                       0x2201,
-                       0x0000};
- 
-/*
- * Instruction cycle: Fetch, Decode, Execute
- */
- 
-/*
- * Current state of machine: It's a binary true/false
- */
- 
-int running = TRUE;
- 
-/*
- * Fetch
- */
-int fetch()
-{
-  /*
-   * Program Counter
-   */
-  static int pc = 0;
- 
-  if (pc == NUM_REGS)
-    return INVALID;
- 
-  return code[pc++];
-}
- 
-void decode(int instr, VMData *t)
-{
-  t->op   = (instr & 0xF000) >> 12;
-  t->reg1 = (instr & 0x0F00) >> 8;
-  t->reg2 = (instr & 0x00F0) >> 4;
-  t->reg3 = (instr & 0x000F);
-  t->scal = (instr & 0x00FF);
-}
- 
-void execute(VMData *t)
-{
-  switch(t->op) {
-    case 1:
-      /* LOAD */
-      printf("\nLOAD REG%d %d\n", t->reg1, t->scal);
-      regs[t->reg1] = t->scal;
-      break;
- 
-    case 2:
-      /* ADD */
-      printf("\nADD %d %d\n", regs[t->reg2], regs[t->reg3]);
-      regs[t->reg1] = regs[t->reg2] + regs[t->reg3];
-      printf("\nResult: %d\n", regs[t->reg1]);
-      break;
- 
-    case 0:
-    default:
-      /* Halt the machine */
-      printf("\nHalt!\n");
-      running = FALSE;
-      break;
-    }
-}
- 
-void run()
-{
-  int instr;
-  VMData t;
- 
-  while(running)
-  {
-    instr = fetch();
- 
-    if (INVALID == instr)
-      break;
- 
-    decode(instr, &t);
-    execute(&t);
-  }
-}
- 
-int main()
-{
-  run();
-  return 0;
-}
-```
+一个简单的[register-based VM](https://github.com/seamaner/eBPF-tutorial/blob/main/hello-world/vm.c)     
 在这个VM里“寄存器”就是`int`数组`int regs[NUM_REGS];`。    
     
-那么eBPF是如何设计的？看一下eBPF字节码。
+那么eBPF是如何设计的？看一下eBPF字节码。   
 
 ## eBPF字节码
 
@@ -220,7 +47,10 @@ int main()
 
 ### C hello world 
 
-就是把“hello world”输出出来。
+就是把“hello world”输出出来:    
+```
+printf("%s\n", "Hello world!\n");
+```
 
 ### eBPF Hello world
 
@@ -248,16 +78,17 @@ struct {    /* Used by BPF_PROG_LOAD */
 };
 ```
 
-#### 如何打印打印函数
+#### 如何打印
 
-bpf_trace_printk  
+打印函数  
+可以用helper函数`bpf_trace_printk`输出。    
 
 #### 如何把字符串传给给内核呢？
 
-字符串共13个字节。可以分拆成几段，每4字节段（imm是32bit），这样可以存在寄存器上，接着可以保存到stack上。  
+动手写才发现，通过系统调用bpf传递给内核的是字节码序列，这不像C可以直接输出字符串，“hello world\n”共13个字节。可以分拆成几段，每4字节段（imm是32bit），这样可以存在寄存器上，接着可以保存到stack上。  
 最后，调用print函数完成输出。  
 
-代码最终的结果：  
+字节码代码最终的结果：  
 
 ```
 struct bpf_insn bpf_prog[] = {
@@ -287,10 +118,40 @@ struct bpf_insn bpf_prog[] = {
 ```
 The BPF_PROG_RUN command can be used through the bpf() syscall to execute a BPF program in the kernel and return the results to userspace. This can be used to unit test BPF programs against user-supplied context objects, and as way to explicitly execute programs in the kernel for their side effects. The command was previously named BPF_PROG_TEST_RUN, and both constants continue to be defined in the UAPI header, aliased to the same value.
 ```
+得到代码：  
+```
+int bpf_prog_test_run(int prog_fd)
+{
+    struct ipv4_packet pkt_v4;//must have one to pass TEST_RUN check
+    union bpf_attr attr = {
+        .test.prog_fd = prog_fd,        
+        .test.repeat = 1,
+        .test.data_in = (unsigned long)&pkt_v4,
+        .test.data_size_in = sizeof(pkt_v4),
+    };
+
+    return bpf(BPF_PROG_RUN, &attr, sizeof(attr));
+}
+```
 
 #### 编译 -》 加载到内核 
 
-一般需要关联到内核事件，内核整个是由事件驱动的。查看man 发现run test CMD  
+```
+int main(void){
+    int prog_fd = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, bpf_prog, sizeof(bpf_prog)/sizeof(bpf_prog[0]), "GPL");
+    //int prog_fd = bpf_prog_load(BPF_PROG_TYPE_CGROUP_SKB, bpf_prog, sizeof(bpf_prog)/sizeof(bpf_prog[0]), "GPL");
+    if (prog_fd < 0) {
+        perror("BPF load prog");
+        exit(-1);
+    }
+    printf("%s", bpf_log_buf);
+    printf("prog_fd: %d\n", prog_fd);
+    int ret = bpf_prog_test_run(prog_fd);
+    printf("%s(pid %d): ret %d\n", "run this hello world", getpid(), ret);
+    return 0;
+}
+```  
+完整代码见这里：https://github.com/seamaner/eBPF-tutorial/blob/main/hello-world/hello.c
 
 #### 运行结果查看  
 
