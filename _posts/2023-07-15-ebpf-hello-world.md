@@ -157,3 +157,4 @@ int main(void){
 
 bpftool prog tracelog    
 ![tracelog](./eBPF-hello-world-tracelog.png)
+![INNER JOIN](/_posts/eBPF-hello-world-tracelog.png)
