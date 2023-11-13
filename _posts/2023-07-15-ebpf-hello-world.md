@@ -156,5 +156,4 @@ int main(void){
 #### 运行结果查看  
 
 bpftool prog tracelog    
-![tracelog](./eBPF-hello-world-tracelog.png)
-![INNER JOIN](/_posts/eBPF-hello-world-tracelog.png)
+![tracelog](/images/ebpf/eBPF-hello-world-tracelog.png)
