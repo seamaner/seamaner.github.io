@@ -24,21 +24,21 @@ eBPF是如何工作的？它有一种语言和一种运行时。这种语言可�
 
 eBPF-timeline
 
-- 2011 network virtualization and software-defined networking
-- PLUMgrid公司的Alexei Starovoitov发明了eBPF的前身，一种基于x86汇编的指令集，在内核内校验后再运行，用于定位网络问题
-- Alexei为了把他的发明合入Linux kernel，找到了Chris Wright(现在时Red Hat 的CTO，当时是SDN的首席架构师），Chris建议Alexei看一下cBPF，
-  整合进已经在内核中存在的cBPF，这样便于内核社区理解和接收。
-- 最初的patch没有引起内核维护者的兴趣，但引起了Daniel Borkmann and Thomas Graf的兴趣（此时两人工作与Red Hat，Daniel当时从事cBPF的工作），Daniel Borkmann and Thomas Graf去PLUMgrid的办公司拜访了Alexei，3人讨论怎样让内核社区接收。
-- Daniel负责向Linux kernel网络团队评估eBPF的价值。Alexei也扩充了eBPF的应用场景，用于kernel tracing。
-- 2014 Brendan Gregg(Netflix) 和Alexei讨论，增加kprobe支持，B-rendan增加周边支持，发展成现在的bcc和bpftrace
-
-- 2014 合入linux kernel: David S. Miller 批准了v10版patch，视为对BPF的增强“if this enhances something we already have, why not?”
-
-- 2017 关于eBPF的应用被在各大会议上被展示：
-- 2017 NetDev展示了基于eBPF的L4 负载均衡Katran，获得了相对于IPVS 10倍的性能提升
-- DockerCon2017 展示了Cilium - eBPF在网络和安全方面的应用，围绕cilium，创立了公司Isovalent
-
-- Google宣布把Cilium 作为自家K8s(GKE)的网络层。随后AWS和微软也都跟进采用Cilium和eBPF作为他们k8s平台的网络。
-
-- eBPF 移植到windows，IETF标准化
+1.2011-2014诞生
+  - 2011 network virtualization and software-defined networking
+  - PLUMgrid公司的Alexei Starovoitov发明了eBPF的前身，一种基于x86汇编的指令集，在内核内校验后再运行，用于定位网络问题
+  - Alexei为了把他的发明合入Linux kernel，找到了Chris Wright(现在时Red Hat 的CTO，当时是SDN的首席架构师），Chris建议Alexei看一下cBPF，整合进已经在内核中存在的cBPF，这样便于内核社区理解和接收。
+  - 最初的patch没有引起内核维护者的兴趣，但引起了Daniel Borkmann and Thomas Graf的兴趣（此时两人工作与Red Hat，Daniel当时从事cBPF的工作），Daniel Borkmann and Thomas Graf去PLUMgrid的办公司拜访了Alexei，3人讨论怎样让内核社区接收。
+  - Daniel负责向Linux kernel网络团队评估eBPF的价值。Alexei也扩充了eBPF的应用场景，用于kernel tracing。
+2.2014合入Linux kernel
+  - 2014 Brendan Gregg(Netflix) 和Alexei讨论，增加kprobe支持，B-rendan增加周边支持，发展成现在的bcc和bpftrace
+  - 2014 合入linux kernel: David S. Miller 批准了v10版patch，视为对BPF的增强“if this enhances something we already have, why not?”
+3.2017展现实力
+  - 2017 关于eBPF的应用被在各大会议上被展示：
+  - 2017 NetDev展示了基于eBPF的L4 负载均衡Katran，获得了相对于IPVS 10倍的性能提升
+  - DockerCon2017 展示了Cilium - eBPF在网络和安全方面的应用，围绕cilium，创立了公司Isovalent
+4.2020江湖地位
+  - Google宣布把Cilium 作为自家K8s(GKE)的网络层。随后AWS和微软也都跟进采用Cilium和eBPF作为他们k8s平台的网络。
+5.影响力辐射
+  - eBPF 移植到windows，IETF标准化
   
