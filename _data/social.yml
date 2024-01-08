@@ -9,3 +9,7 @@
 - sitename: 微博
   name: seamaner
   url: http://weibo.com/seamaner
+  
+- sitename: cryptohack
+  name: user/H0cker
+  url: https://cryptohack.org/user/H0cker/
