@@ -1,4 +1,10 @@
-# 简单分析initramfs
+---
+layout: post
+title: 简单分析initramfs
+categories: initramfs
+description: 简单分析initramfs
+keywords: ramfs
+---
 
 
 initramfs 是linux 启动必须的吗？如果kernel有mount root fs所需的所有驱动，initramfs就不是必须的。读取磁盘数据，
