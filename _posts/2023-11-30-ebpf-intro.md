@@ -7,31 +7,9 @@ keywords: eBPF 发展历史
 ---
 
 
-eBPF的出现有其技术发展上的必然性。虚拟化的发展，特别是网络虚拟化的发展，使得技术异常的复杂，定位解决问题变得非常困难。最开始设计eBPF的人，可能也没预料到有如此大的应用和影响。
+eBPF的出现有其技术发展上的必然性。虚拟化的发展，特别是网络虚拟化的发展，使得技术异常的复杂，定位解决问题变得非常困难。最开始设计eBPF的人，可能也没预料到有如此大的应用和影响。有个人为了解决自己公司的问题，发明了一种语言，后来又合入到了主线，这就是eBPF。
 
 
-## 什么是eBPF？
-
-- eBPF is a programming language and runtime to extend operating systems.
-- eBPF is like JavaScript or Lua but for kernel Developers.    
-  
-- eBPF是一种编程语言和运行时，用于扩展操作系统  
-- eBPF就像JavaScript或Lua一样，但面向内核开发人员  
-- eBPF由事件触发运行  
-  JavaScript代码如何运行？当某个事件发生时，例如当网站用户点击按钮并提交表单时。类似地，当内核中某个事件发生时，运行eBPF程序 -- 当系统调用被调用、网络数据包被处理、文件被访问等等。所以在概念上它们非常相似，它们使系统可编程。
-    
-## 为什么选择eBPF？  
-  
-- 可编程性使内核可以快速适应不断变化的需求  
-    - 操作系统，特别是Linux，变得非常难以改变。花费数周甚至数月的时间才能将更改提交到上游，然后需要数年时间才能让用户使用新版本。这样就不能一直适应不断变化的需求。eBPF使操作系统具有可编程性，从而可以不断适应不断变化的需求，从而快速创新。这是为什么eBPF存在的最重要的根本原因。  
-    - "BPF has actually been really useful, and the real power of it is how it allows people to do specialized code that isn't enabled until asked for." - Linus
-- eBPF的可编程性，与Lua或WebAssembly有什么不同呢？  
-    - eBPF专门设计用于嵌入到操作系统Linux和Windows中，它可以与Linux内核进行接口交互，因此可以调用内核API，并且它限制在安全地在内核上下文中运行。但它面向的是内核开发人员，因此理论上很难学习和使用。另一方面，Lua和WebAssembly被设计为嵌入到任意应用程序或系统中，它们是通用的，并且面向应用程序开发人员，更容易学习。但它们不能在操作系统的上下文中运行。因此，eBPF的一个独特特点是它嵌入到操作系统中，这是使eBPF独特的地方。本可以选择Lua作为运行时，嵌入到内核中，并赋予它一个类似于eBPF今天的名称。
-
-## eBPF是如何工作的？  
-   
-它有一种语言和一种运行时。这种语言可以用多种不同的语言来表达，比如使用类似于C的代码，我们使用像LLVM或Clang这样的编译器将其编译成字节码。    
-  
 ## 发展历史  
   
 eBPF-timeline  
@@ -55,4 +33,27 @@ eBPF-timeline
     - 2021.5 eBPF 移植到windows(2021.5 Making eBPF work on Windows官宣)
     - 2021.12 eBPF基金会成立
     - IETF标准化
+  
+## 什么是eBPF？
+
+- eBPF is a programming language and runtime to extend operating systems.
+- eBPF is like JavaScript or Lua but for kernel Developers.    
+  
+- eBPF是一种编程语言和运行时，用于扩展操作系统  
+- eBPF就像JavaScript或Lua一样，但面向内核开发人员  
+- eBPF由事件触发运行  
+  JavaScript代码如何运行？当某个事件发生时，例如当网站用户点击按钮并提交表单时。类似地，当内核中某个事件发生时，运行eBPF程序 -- 当系统调用被调用、网络数据包被处理、文件被访问等等。所以在概念上它们非常相似，它们使系统可编程。
+    
+## 为什么选择eBPF？  
+  
+- 可编程性使内核可以快速适应不断变化的需求  
+    - 操作系统，特别是Linux，变得非常难以改变。花费数周甚至数月的时间才能将更改提交到上游，然后需要数年时间才能让用户使用新版本。这样就不能一直适应不断变化的需求。eBPF使操作系统具有可编程性，从而可以不断适应不断变化的需求，从而快速创新。这是为什么eBPF存在的最重要的根本原因。  
+    - "BPF has actually been really useful, and the real power of it is how it allows people to do specialized code that isn't enabled until asked for." - Linus
+- eBPF的可编程性，与Lua或WebAssembly有什么不同呢？  
+    - eBPF专门设计用于嵌入到操作系统Linux和Windows中，它可以与Linux内核进行接口交互，因此可以调用内核API，并且它限制在安全地在内核上下文中运行。但它面向的是内核开发人员，因此理论上很难学习和使用。另一方面，Lua和WebAssembly被设计为嵌入到任意应用程序或系统中，它们是通用的，并且面向应用程序开发人员，更容易学习。但它们不能在操作系统的上下文中运行。因此，eBPF的一个独特特点是它嵌入到操作系统中，这是使eBPF独特的地方。本可以选择Lua作为运行时，嵌入到内核中，并赋予它一个类似于eBPF今天的名称。
+
+## eBPF是如何工作的？  
+   
+它有一种语言和一种运行时。这种语言可以用多种不同的语言来表达，比如使用类似于C的代码，我们使用像LLVM或Clang这样的编译器将其编译成字节码。    
+  
   
