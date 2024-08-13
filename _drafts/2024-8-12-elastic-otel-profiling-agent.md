@@ -117,5 +117,5 @@ If the binary has been compiled with a frame pointer register, then identifying 
 address has been stored and recursively walking the stack is simple: for example, the x86_64 ABI
 specifies that the frame pointer register is rbp, that the return address of the current frame is stored
 at the address pointed by rbp+8, and that the base pointer of the previous frame is stored at the address pointed by rbp.  
-frame pointer是可以去掉的，栈的维护并不依赖它，通过rsp和当前frame的长度就可以回到上一个frame。  
+frame pointer是可以去掉的，栈的维护并不依赖它，通过rsp和当前frame的长度就可以回到上一个frame。gcc有个编译参数可以去掉fp -- `-fomit-frame-pointer`.     
 这篇[paper](https://inria.hal.science/hal-02297690/document)介绍了怎样用`eh_frame`恢复调用栈。
