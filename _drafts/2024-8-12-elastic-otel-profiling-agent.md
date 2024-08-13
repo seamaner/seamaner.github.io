@@ -99,5 +99,14 @@ func (t *Tracer) AttachTracer(sampleFreq int) error {
 ```
 
 ## go
-/processmanager/ebpf/ebpf.go
-UpdatePidPageMappingInfo  
+用户态processManager负责管理使用哪个interpreter  
+/processmanager/ebpf/ebpf.go  
+UpdatePidPageMappingInfo    
+processmanager/processinfo.go  
+```
+handleNewMapping
+   AddOrIncRef
+      detectAndLoadInterpData
+      
+   handleNewInterpreter  
+```
