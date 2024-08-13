@@ -98,7 +98,7 @@ func (t *Tracer) AttachTracer(sampleFreq int) error {
 }
 ```
 
-## go
+## interpreter确定
 用户态processManager负责管理使用哪个interpreter  
 /processmanager/ebpf/ebpf.go  
 UpdatePidPageMappingInfo    
@@ -110,3 +110,12 @@ handleNewMapping
       
    handleNewInterpreter  
 ```
+
+## 栈回溯 - unwind
+frame point存在（有rbp）
+If the binary has been compiled with a frame pointer register, then identifying where the return
+address has been stored and recursively walking the stack is simple: for example, the x86_64 ABI
+specifies that the frame pointer register is rbp, that the return address of the current frame is stored
+at the address pointed by rbp+8, and that the base pointer of the previous frame is stored at the address pointed by rbp.  
+frame pointer是可以去掉的，栈的维护并不依赖它，通过rsp和当前frame的长度就可以回到上一个frame。  
+这篇[paper](https://inria.hal.science/hal-02297690/document)介绍了怎样用`eh_frame`恢复调用栈。
