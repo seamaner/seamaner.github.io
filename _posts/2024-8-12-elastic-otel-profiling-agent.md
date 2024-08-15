@@ -6,8 +6,13 @@ description: elastic otel profiling agent 代码分析
 keywords: eBPF, stack unwind, Otel profiler
 ---
 
-OTel profiling agent 基于eBPF，实现了全系统跨语言的性能分析器。这个项目使用eBPF，可以抓取到详细的用户态调用栈。具有几个令人惊讶的优点：几乎可以支持任何语言开发的目前程序，目前支持C/C++、Go等编译性语言，也支持Java、Python、Perl等解释性语言；安全性高，实现方式不需要在目标程序能hook嵌入代码。性能高，性能开销小于1%。  
-调用栈的unwind能力也很强，没有frame pointer和debug信息的情况，使用`eh_frame`辅助获取完整栈信息。目前，项目迁移到[这里](https://github.com/open-telemetry/opentelemetry-ebpf-profiler) (贡献给opentelemetry了）。本文简单分析下，它是如何做到的。
+OTel profiling agent 基于eBPF，实现了全系统跨语言的性能分析器。这个项目使用eBPF，可以抓取到详细的用户态调用栈。具有几个令人惊讶的优点：  
+几乎可以支持任何语言开发的目前程序，目前支持C/C++、Go等编译性语言，也支持Java、Python、Perl等解释性语言；  
+安全性高，实现方式不需要在目标程序能hook嵌入代码。  
+性能高，性能开销小于1%。  
+调用栈的unwind能力也很强，没有frame pointer和debug信息的情况，使用`eh_frame`辅助获取完整栈信息。  
+目前，项目迁移到[这里](https://github.com/open-telemetry/opentelemetry-ebpf-profiler) (贡献给opentelemetry了）。  
+本文简单分析下，它是如何做到的。  
 
 ## ubuntu上运行
 
