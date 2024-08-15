@@ -1,5 +1,15 @@
+---
+layout: post
+title: elastic otel profiling agent 代码分析
+categories: eBPF
+description: elastic otel profiling agent 代码分析
+keywords: eBPF, stack unwind, Otel profiler
+---
+
 项目迁移到[这里](https://github.com/open-telemetry/opentelemetry-ebpf-profiler) (贡献给opentelemetry了）
+
 ## ubuntu上运行
+
 version(`./otel-profiling-agent -version
 1.0.0`)  
 - 启动桌面
@@ -8,6 +18,8 @@ version(`./otel-profiling-agent -version
 `./devfiler-appimage-x86_64.AppImage`  
 - 启动agent
 `./otel-profiling-agent -collection-agent=127.0.0.1:11000 -disable-tls`
+
+![运行效果](/images/devfiler.png)
 
 ## 查看加载的eBPF程序
 ```
@@ -54,7 +66,8 @@ version(`./otel-profiling-agent -version
 ```
 
 ## ebpf代码
-hook点 perf_event
+
+hook点 perf_event  
 - perf_event/unwind_native
 - perf_event/native_tracer_entry
 - native_stack_trace.ebpf.c
@@ -99,6 +112,7 @@ func (t *Tracer) AttachTracer(sampleFreq int) error {
 ```
 
 ## interpreter确定
+
 用户态processManager负责管理使用哪个interpreter  
 /processmanager/ebpf/ebpf.go  
 UpdatePidPageMappingInfo    
@@ -112,6 +126,7 @@ handleNewMapping
 ```
 
 ## 栈回溯 - unwind
+
 frame point存在（有rbp）
 If the binary has been compiled with a frame pointer register, then identifying where the return
 address has been stored and recursively walking the stack is simple: for example, the x86_64 ABI
