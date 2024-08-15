@@ -6,11 +6,12 @@ description: elastic otel profiling agent 代码分析
 keywords: eBPF, stack unwind, Otel profiler
 ---
 
-项目迁移到[这里](https://github.com/open-telemetry/opentelemetry-ebpf-profiler) (贡献给opentelemetry了）
+OTel profiling agent 基于eBPF，实现了全系统跨语言的性能分析器。这个项目使用eBPF，可以抓取到详细的用户态调用栈。具有几个令人惊讶的优点：几乎可以支持任何语言开发的目前程序，目前支持C/C++、Go等编译性语言，也支持Java、Python、Perl等解释性语言；安全性高，实现方式不需要在目标程序能hook嵌入代码。性能高，性能开销小于1%。  
+调用栈的unwind能力也很强，没有frame pointer和debug信息的情况，使用`eh_frame`辅助获取完整栈信息。目前，项目迁移到[这里](https://github.com/open-telemetry/opentelemetry-ebpf-profiler) (贡献给opentelemetry了）。本文简单分析下，它是如何做到的。
 
 ## ubuntu上运行
 
-version(`./otel-profiling-agent -version
+version(`./otel-profiling-agent -version 
 1.0.0`)  
 - 启动桌面
 `startx`, 原因是[这个](https://github.com/open-telemetry/opentelemetry-ebpf-profiler/issues/14)
@@ -66,14 +67,12 @@ version(`./otel-profiling-agent -version
 ```
 
 ## ebpf代码
-
-hook点 perf_event  
+何时触发eBPF程序? 不同语言的栈结构是不完全相同的，是如何回溯不同的栈的？  
+eBPF的主要的hook点是perf_event，首先通过在每一个CPU上设置上周期执行的perf profiling时间，然后将eBPF通过ioctl绑定到perf-event上，每次perf框架驱动profiling事件时，执行eBPF程序，首先执行的是`native_tracer_entry`。代码详见`AttachTracer`, eBPF程序主要在native_stack_trace.ebpf.c中：   
 - perf_event/unwind_native
 - perf_event/native_tracer_entry
-- native_stack_trace.ebpf.c
 
-tracer/tracer.go  
-freg 默认20，一秒20次  
+tracer/tracer.go 代码freg 默认20，一秒20次  
 ```
 // AttachTracer attaches the main tracer entry point to the perf interrupt events. The tracer
 // entry point is always the native tracer. The native tracer will determine when to invoke the
@@ -112,11 +111,9 @@ func (t *Tracer) AttachTracer(sampleFreq int) error {
 ```
 
 ## interpreter确定
+不同语言的栈又是如何回溯的呢？用户态Golang程序在程序加载时，接收到内核通过eBPF发过来的事件，对目标程序的各个内存区`mapping`，找到对应的加载器（比如elf中的ld entry），并将结果再存到eBPF map中供eBPF程序使用。查找interpreter是很慢的操作，不适合用eBPF实现。  
 
-用户态processManager负责管理使用哪个interpreter  
-/processmanager/ebpf/ebpf.go  
-UpdatePidPageMappingInfo    
-processmanager/processinfo.go  
+用户态processManager负责管理使用哪个interpreter  主要的代码流程如下：
 ```
 handleNewMapping
    AddOrIncRef
@@ -124,13 +121,15 @@ handleNewMapping
       
    handleNewInterpreter  
 ```
-
+eBPF程序首先进入的是统一的入口，`native_tracer_entry`, 然后根据interpreter信息，通过tailcall的方式调用各自语言的eBPF程序，`unwind_ruby, unwind_pyth ...`.    
 ## 栈回溯 - unwind
 
-frame point存在（有rbp）
+frame point存在（有rbp）, 这种情况下回溯是比较简单的：
+```
 If the binary has been compiled with a frame pointer register, then identifying where the return
 address has been stored and recursively walking the stack is simple: for example, the x86_64 ABI
 specifies that the frame pointer register is rbp, that the return address of the current frame is stored
-at the address pointed by rbp+8, and that the base pointer of the previous frame is stored at the address pointed by rbp.  
-frame pointer是可以去掉的，栈的维护并不依赖它，通过rsp和当前frame的长度就可以回到上一个frame。gcc有个编译参数可以去掉fp -- `-fomit-frame-pointer`.     
+at the address pointed by rbp+8, and that the base pointer of the previous frame is stored at the address pointed by rbp.
+```    
+frame pointer是可以去掉的，栈的维护并不依赖它，通过rsp和当前frame的长度就可以回到上一个frame。gcc有个编译参数可以去掉fp -- `-fomit-frame-pointer`.  缺少FP的情况，OTel profing agent 使用了eh_frame信息回溯。eh_frame信息也是用户态Golang准备好的，就是项目中的`stack delta`.   
 这篇[paper](https://inria.hal.science/hal-02297690/document)介绍了怎样用`eh_frame`恢复调用栈。

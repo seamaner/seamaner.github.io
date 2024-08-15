@@ -5,9 +5,9 @@ baseurl:
 url: https://seamaner.github.io
 date_format: "ordinal"
 title: seamaner's blog
-subtitle: "seamaner's 碎碎念"
-description: "seamaner's blog & 碎碎念"
-keywords: seamaner, kernel, security,... 
+subtitle: "seamaner's 笔记"
+description: "seamaner's blog"
+keywords: seamaner, kernel, security, ... 
 timezone: Asia/Shanghai
 encoding: "utf-8"
 # 页面左下角显示的年份
