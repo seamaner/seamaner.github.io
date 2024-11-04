@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 简单分析initramfs
-categories: initramfs
+categories: [linux]
 description: 简单分析initramfs
 keywords: ramfs
 ---

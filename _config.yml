@@ -79,6 +79,8 @@ navs:
 #   -
 #     href: /archives/
 #     label: 归档
+#   -
+#     donate: /donate/
 
 #   -
 #     href: /open-source/
@@ -116,7 +118,6 @@ permalink: /:year/:month/:day/:title/
 plugins:
     - jekyll-github-metadata
     - rouge
-#     - jekyll-html-pipeline
     - jekyll-paginate
     - jekyll-sitemap
     - jekyll-feed
