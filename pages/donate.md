@@ -14,9 +14,7 @@ permalink: /donate/
 
 ## Paypal
 
-[Donate via Paypal](https://seamaner.github.io)
 
 ## 微信 / Wechat
 
-<img style="width:256px;border:1px solid lightgrey;" src="{{ assets_base_url }}" alt="wechat receipt code" />
 
