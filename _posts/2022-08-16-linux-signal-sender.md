@@ -1,4 +1,12 @@
-程序经常收到SIGTERM退出，一直没查明白SIGTERM是谁发送的。signal函数注册的处理函数只接收到signum，不知道发送者是谁。一番查找发现sigaction函数注册的sa_sigaction回调函数，有siginfo_t结构，查看man其中的si_pid就是发送者的pid。
+---
+layout: post
+title: linux signal sender
+categories: linux
+description: linux signal sender
+keywords: linux, signal
+---
+
+程序经常收到SIGTERM退出，一直没查明白SIGTERM是谁发送的。signal函数注册的处理函数只接收到signum，不知道发送者是谁。一番查找发现sigaction函数注册的sa_sigaction回调函数，有siginfo_t结构，查看man其中的si_pid就是发送者的pid。  
 
 ## si_pid  
 
@@ -8,7 +16,7 @@
 int sigaction(int signum, const struct sigaction *act,
         struct sigaction *oldact);
 ```
-**sigaction struct**:
+**sigaction struct**:  
 ```C
 struct sigaction {
     void     (*sa_handler)(int);
@@ -18,7 +26,7 @@ struct sigaction {
     void     (*sa_restorer)(void);
 };
 ```
-**siginfo_t**
+**siginfo_t**  
 ```C
 siginfo_t {
     int      si_signo;     /* Signal number */
@@ -61,7 +69,7 @@ siginfo_t {
 
 ## example  
 
-**sender.c**
+**sender.c**  
 ```C
 #include<stdio.h>
 #include<signal.h>
@@ -92,12 +100,12 @@ int main(){
     return 0;
 }
 ```
-**运行结果**：
+**运行结果**： 
 ```
  gcc -o sender sender.c
 
-./sender
-myself is 58579
+./sender  
+myself is 58579  
 si_signo=15, si_status=0, si_code=0, si_pid=58579, si_uid=1000, si_addr=0x3e80000e4d3
 myself is 58578
 ```
