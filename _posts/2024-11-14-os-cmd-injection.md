@@ -6,7 +6,7 @@ description: command injection
 keywords: security command indection
 ---
 
-有些应用是通过后台执行OS 命令实现的（如shell）， 像导出tech-support文件.  
+有些应用是通过后台执行OS 命令实现的（如shell）， 像导出tech-support文件. 如果又使用了用户输入作为命令的一部分就很容易出现命令注入(command injection)漏洞。  
 
 ## Ways of injecting OS commands
 
@@ -40,7 +40,7 @@ If you have to call out to OS commands with user-supplied input, then you must p
 Never attempt to sanitize input by escaping shell metacharacters. In practice, this is just too error-prone and vulnerable to being bypassed by a skilled attacker.
 ```
 
-## 参考资料
-[portswigger/web-security/os-command-injection](https://portswigger.net/web-security/os-command-injection)
-[pwn.college/inter/web-security/cmdi](https://pwn.college/intro-to-cybersecurity/web-security/)
+## 参考资料  
+[portswigger/web-security/os-command-injection](https://portswigger.net/web-security/os-command-injection)  
+[pwn.college/inter/web-security/cmdi](https://pwn.college/intro-to-cybersecurity/web-security/)  
 
