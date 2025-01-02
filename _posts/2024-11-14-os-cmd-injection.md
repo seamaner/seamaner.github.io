@@ -27,6 +27,19 @@ keywords: security command indection
 - `
 - $(
 ```
+## python注入
+"\r\n"都会作为python的换行符：
+```
+    result = []
+    with self._storage_file.open(encoding='utf-8') as input_stream:
+      for line in input_stream:
+        # Remove trailing newline so it won't become part of the value.
+        entry_key, entry_value = line.rstrip().split(':', 1)
+        if entry_key == key:
+          result.append(entry_value)
+    return result
+```
+如果内容中有`\r`也会被当作换行符处理。  
 
 ## how to prevent
 
