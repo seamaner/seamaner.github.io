@@ -1,6 +1,6 @@
 ---
 layout: post
-title: kernel memory manage: paging
+title: 内核内存管理-虚拟地址到物理地址转换实验
 categories: kernel
 description: 从虚机地址到物理地址转换过程
 keywords: kernel, 内核
