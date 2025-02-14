@@ -11,14 +11,37 @@ keywords: kernel, 内核
 ## 虚拟地址  
 
 可以从/proc/self/maps查看到展示用户空间进程的各个内存区:  
-
 ```
+561b0feb4000-561b0feb5000 r--p 00000000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
+561b0feb5000-561b0feb6000 r-xp 00001000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
+561b0feb6000-561b0feb7000 r--p 00002000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
+561b0feb7000-561b0feb8000 r--p 00002000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
+561b0feb8000-561b0feb9000 rw-p 00003000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
+561b2be8b000-561b2beac000 rw-p 00000000 00:00 0                          [heap]
+7f1b6d3d4000-7f1b6d3d7000 rw-p 00000000 00:00 0
+7f1b6d3d7000-7f1b6d3ff000 r--p 00000000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d3ff000-7f1b6d594000 r-xp 00028000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d594000-7f1b6d5ec000 r--p 001bd000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d5ec000-7f1b6d5ed000 ---p 00215000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d5ed000-7f1b6d5f1000 r--p 00215000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d5f1000-7f1b6d5f3000 rw-p 00219000 fd:00 137558                     /usr/lib/x86_64-linux-gnu/libc.so.6
+7f1b6d5f3000-7f1b6d600000 rw-p 00000000 00:00 0
+7f1b6d60a000-7f1b6d60c000 rw-p 00000000 00:00 0
+7f1b6d60c000-7f1b6d60e000 r--p 00000000 fd:00 132206                     /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f1b6d60e000-7f1b6d638000 r-xp 00002000 fd:00 132206                     /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f1b6d638000-7f1b6d643000 r--p 0002c000 fd:00 132206                     /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f1b6d644000-7f1b6d646000 r--p 00037000 fd:00 132206                     /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7f1b6d646000-7f1b6d648000 rw-p 00039000 fd:00 132206                     /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7ffcae07f000-7ffcae0a0000 rw-p 00000000 00:00 0                          [stack]
+7ffcae11c000-7ffcae120000 r--p 00000000 00:00 0                          [vvar]
+7ffcae120000-7ffcae122000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
 ```
 
 观察各个内存区，在范围上他们都小于0x7ffffffff000, 实际上，在x64上地址区间是这样分布的：  
-  128TB以下用户空间，64位地址的低48位，48 = 4 * 9 + 12 ， paging的过程
-  128以上线性地址， 内核kmalloc， object pool
-  128以上vmalloc， 这部分地址管理上和用户空间地址是相似的，都是虚拟地址，区别在于使用的PGT不太，vmalloc使用的内核pgd，即`init_mm.pgd`.   
+-  128TB以下用户空间，64位地址的低48位，48 = 4 * 9 + 12 ， paging的过程
+-  128以上线性地址， 内核kmalloc， object pool
+-  128以上vmalloc， 这部分地址管理上和用户空间地址是相似的，都是虚拟地址，区别在于使用的PGT不太，vmalloc使用的内核pgd，即`init_mm.pgd`.   
 
 ```
 (gdb) p init_mm.pgd
