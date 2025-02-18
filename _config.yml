@@ -183,7 +183,7 @@ simple_jekyll_search:
 #      Google      #
 # ---------------- #
 google:
-  #    analytics_id: G-Q5R6HBYKKL
+      analytics_id: G-Q5R6HBYKKL
   #    adsense:
   #      footer: true
   #      sidebar: true 
