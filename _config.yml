@@ -27,7 +27,7 @@ components:
         hide-platforms: qq,facebook
     # 不蒜子访问统计
     busuanzi:
-        enabled: true
+        enabled: false
         start_date: 2022-05-03
         busuanzi_site_offset: 10000
     # My Popular Repositories
