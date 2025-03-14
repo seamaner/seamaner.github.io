@@ -1,17 +1,19 @@
 ---
 layout: post
-title: eBPF tailcall
+title: 掌握eBPF - tailcall
 categories: eBPF
 description: eBPF tailcall
 keywords: eBPF tailcall
 ---
 
+本文从C语言中函数调用的jump优化入手，理解 eBPF 的重要概念 - tailcall.   
 
-## 什么是Tail-call  
+## 什么是Tail-call   
+
 "tail-call"（尾调用）是指一个函数在执行结束时，最后一步调用的是另一个函数，且该调用的返回值直接作为当前函数的返回值。简单来说，就是当前函数的最后一步是调用另一个函数，并将该函数的返回值返回给当前函数的调用者，而不需要在当前函数中进行其他的操作。  
 
 尾调用优化是一种编译器优化技术，它可以在某些情况下避免在函数调用时创建新的栈帧，从而减少函数调用的开销和内存消耗。这种优化通常在函数嵌套调用较深或需要进行递归计算时会带来明显的性能提升。  
-看一个C语言计算斐波那契数列的例子。  
+看一个C语言计算斐波那契数列的例子。   
 ```
 #include <stdint.h>
 
