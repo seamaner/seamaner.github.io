@@ -6,11 +6,11 @@ description: 从虚机地址到物理地址转换过程
 keywords: kernel, 内核
 ---
 
-虚拟地址是如何一步步转为物理地址的？用户态程序运行时，访问内存的指令，cpu在运行时会根据CR3寄存器的值一步步查询到最终的物理地址，这一过程是由MMU自动完成的。虚拟地址到物理地址到底是如何转换的？借助qemu我们可以通过实验查看整个转换过程是如何工作的。  
+虚拟地址是如何一步步转为物理地址的？CPU在运行用户空间程序访问内存的指令时，会根据CR3寄存器的值一步步查询到最终的物理地址，这一过程是由MMU自动完成的。虚拟地址到物理地址到底是如何转换的？借助qemu我们可以通过实验查看整个转换过程是如何工作的。  
 
 ## 虚拟地址  
 
-可以从/proc/self/maps查看到展示用户空间进程的各个内存区:  
+可以从/proc/self/maps查看到用户空间进程的各个内存区:  
 ```
 561b0feb4000-561b0feb5000 r--p 00000000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
 561b0feb5000-561b0feb6000 r-xp 00001000 fd:00 917628                     /home/ubuntu/kernel/hack/mm
@@ -40,8 +40,8 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 
 观察各个内存区，在范围上他们都小于0x7ffffffff000, 实际上，在x64上地址区间是这样分布的：  
 -  128TB以下用户空间，64位地址的低48位，48 = 4 * 9 + 12 ， paging的过程
--  128以上线性地址， 内核kmalloc， object pool
--  128以上vmalloc， 这部分地址管理上和用户空间地址是相似的，都是虚拟地址，区别在于使用的PGT不太，vmalloc使用的内核pgd，即`init_mm.pgd`.   
+-  128TB以上线性地址， 内核kmalloc， object pool
+-  128TB以上vmalloc， 这部分地址管理上和用户空间地址是相似的，都是虚拟地址，区别在于使用的PGT不太，vmalloc使用的内核pgd，即`init_mm.pgd`.   
 
 ```
 (gdb) p init_mm.pgd
@@ -116,7 +116,7 @@ x/a &page_offset_base
 0xffffffff8323f1f8 <page_offset_base>:  0xffff888000000000
 ```
 
-现在有了PGD，也有了page_offset_base可以访问任意物理地址，也有了各级页表的offset(0xac, 0x53, 0xfc, 0x81), 现在可以遍历拿到虚拟地址真正的物理地址了:  
+现在有了PGD，也有了page_offset_base, 可以访问任意物理地址; 也有了各级页表的offset(0xac, 0x53, 0xfc, 0x81); 现在可以遍历拿到虚拟地址真正的物理地址了:  
 
 ```
 
@@ -152,4 +152,4 @@ x/s (0x5614df8812a0 & 0xfff) + (0x6565000 + 0xffff888000000000)
 - 页表中存的地址的低位和高位bit存的是flag：0x8000000005847067中的高位0x8和低位的0x067都是flag  
 
 ## 参考资料  
-[x64 mm](https://github.com/torvalds/linux/blob/master/Documentation/arch/x86/x86_64/mm.rst)
+[x64 mm](https://github.com/torvalds/linux/blob/master/Documentation/arch/x86/x86_64/mm.rst)   
