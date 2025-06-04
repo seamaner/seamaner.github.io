@@ -78,18 +78,18 @@ version(`./otel-profiling-agent -version 1.0.0`)
         pids otel-profiling-(248974)
 ```
 
-## ebpf代码  
+## eBPF代码  
 
 何时触发eBPF程序? 不同语言的栈结构是不完全相同的，是如何回溯不同的栈的？  
 
-eBPF的主要的hook点是perf_event，首先通过在每一个CPU上设置上周期执行的perf profiling事件，然后将eBPF通过ioctl绑定到perf-event上，每次perf框架驱动profiling事件时，执行eBPF程序，首先执行的是`native_tracer_entry`。  
+eBPF的主要的`hook`点是`perf_event`，首先通过在每一个CPU上设置上周期执行的`perf profiling`事件，然后将eBPF通过`ioctl`绑定到`perf-event`上，每次`perf`框架驱动`profiling`事件时，执行eBPF程序，首先执行的是`native_tracer_entry`。  
 
-代码详见`AttachTracer`, eBPF程序主要在native_stack_trace.ebpf.c中：   
+代码详见`AttachTracer`, `eBPF`程序主要在`native_stack_trace.ebpf.c`中：   
 
 - perf_event/unwind_native
 - perf_event/native_tracer_entry
 
-tracer/tracer.go 代码freg 默认20，一秒20次  
+`tracer/tracer.go` 代码`freg` 默认20，一秒20次  
 
 ```
 // AttachTracer attaches the main tracer entry point to the perf interrupt events. The tracer
@@ -130,9 +130,11 @@ func (t *Tracer) AttachTracer(sampleFreq int) error {
 
 ## interpreter确定  
 
-不同语言的栈又是如何回溯的呢？用户态Golang程序在程序加载时，接收到内核通过eBPF发过来的事件，对目标程序的各个内存区`mapping`，找到对应的加载器（比如elf中的ld entry），并将结果再存到eBPF map中供eBPF程序使用。查找interpreter是很慢的操作，不适合用eBPF实现。  
+不同语言的栈又是如何回溯的呢？  
 
-用户态`processManager`负责管理使用哪个interpreter  主要的代码流程如下：  
+用户态Golang程序在程序加载时，接收到内核通过eBPF发过来的事件，对目标程序的各个内存区`mapping`，找到对应的加载器（比如elf中的`ld entry`），并将结果再存到eBPF map中供eBPF程序使用。查找interpreter是很慢的操作，不适合用eBPF实现。  
+
+用户态`processManager`负责管理使用哪个interpreter主要的代码流程如下：  
 
 ```
 handleNewMapping
@@ -142,7 +144,7 @@ handleNewMapping
    handleNewInterpreter  
 ```
 
-eBPF程序首先进入的是统一的入口，`native_tracer_entry`, 然后根据interpreter信息，通过tailcall的方式调用各自语言的eBPF程序，`unwind_ruby, unwind_pyth ...`.    
+eBPF程序首先进入的是统一的入口，`native_tracer_entry`, 然后根据`interpreter`信息，通过`tailcall`的方式调用各自语言的eBPF程序，`unwind_ruby, unwind_pyth ...`.    
 
 ## 栈回溯 - unwind
 
