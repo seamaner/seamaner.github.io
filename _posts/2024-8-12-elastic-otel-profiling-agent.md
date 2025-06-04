@@ -9,6 +9,7 @@ keywords: eBPF, stack unwind, OTel profiling
 OTel profiling agent 基于eBPF，实现了全系统跨语言的性能分析器，值得一提的是，可以抓取到详细的用户态调用栈。
 
 具有几个令人惊讶的优点：  
+
 几乎可以支持任何语言开发的目前程序，目前支持C/C++、Go等编译性语言，也支持Java、Python、Perl等解释性语言；  
 
 安全性高，实现方式不需要在目标程序能hook嵌入代码;  
