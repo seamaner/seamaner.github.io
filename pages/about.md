@@ -11,7 +11,7 @@ permalink: /about/
 
 系统工程师;  
 
-自封的安全专家;  
+自封的安全专家(kernel CVEer);  
 
 自封的Hacker(pwn.college蓝带);  
 
@@ -39,3 +39,4 @@ permalink: /about/
 {% endfor %}
 </div>
 {% endfor %}
+
