@@ -8,13 +8,15 @@ menu: 关于
 permalink: /about/
 ---
 大家好，我是seamaner
-
+   
 系统工程师;  
-
-自封的安全专、Hacker(pwn.college蓝带、kernel CVE reporter);  
-
+  
+Hacker(pwn.college蓝带);
+   
+kernel CVE reporter;  
+   
 记录思考的有趣的地方。同时分享在这里，如果能同时帮助到同在思考的或者困惑的，那自然更好。
-
+   
 
 ## 联系
 
@@ -37,5 +39,6 @@ permalink: /about/
 {% endfor %}
 </div>
 {% endfor %}
+
 
 
