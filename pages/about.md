@@ -11,11 +11,9 @@ permalink: /about/
 
 系统工程师;  
 
-自封的安全专家(kernel CVEer);  
+自封的安全专、Hacker(pwn.college蓝带、kernel CVE reporter);  
 
-自封的Hacker(pwn.college蓝带);  
-
-学习的过程也是不断思考的过程，记录思考的有趣的地方。同时分享在这里，如果能同时帮助到同在思考的或者困惑的，那自然更好。但愿如此。
+记录思考的有趣的地方。同时分享在这里，如果能同时帮助到同在思考的或者困惑的，那自然更好。
 
 
 ## 联系
@@ -39,4 +37,5 @@ permalink: /about/
 {% endfor %}
 </div>
 {% endfor %}
+
 
