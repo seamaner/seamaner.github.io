@@ -7,15 +7,13 @@ comments: true
 menu: 关于
 permalink: /about/
 ---
-大家好，我是seamaner
-   
-系统工程师;  
   
-Hacker(pwn.college蓝带);
+pwn.college蓝带[seamaner](https://pwn.college/hacker/45139);
    
-kernel CVE reporter;  
+kernel CVE report & fix(CVE-2025-38184);  
+
+Wiz Bug Bounty Masterclass Certificate[seamaner](https://www.wiz.io/bug-bounty-masterclass/certificate/417786a8-55b5-490e-a6b7-1dc615641f6e);
    
-记录思考的有趣的地方。同时分享在这里，如果能同时帮助到同在思考的或者困惑的，那自然更好。
    
 
 ## 联系
